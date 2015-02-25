@@ -1,15 +1,11 @@
 class Scanner
-  def initialize(source_code)
-    @source = source_code
-  end
-
-  def tokenize
+  def self.tokenize(source)
     tokens = []
     token = ""
     string = ""
     state = 0
 
-    @source.each_char do |char|
+    source.each_char do |char|
       token += char
 
       if [" ", "\n"].include? token
