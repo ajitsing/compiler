@@ -3,3 +3,5 @@ PRINT "Ajit Singh"
 PRINT "Cool"
 PRINT "This is awesome"
 print "this is lower case print"
+print 233 + 5435 - 20
+print 1

@@ -1,33 +1,62 @@
 class Scanner
+  TOKENS = {
+    :PRINT => "PRINT",
+    :STRING => "STRING:",
+    :SPACE => " ",
+    :NEW_LINE => "\n",
+    :DOUBLE_QUOTE => "\"",
+    :NUMBER => "[0-9]"
+  }
+
   def self.tokenize(source)
     tokens = []
-    token = ""
-    string = ""
-    state = 0
+    token = string = expression = ""
+    state = is_exper = false
 
     source.each_char do |char|
       token += char
 
-      if [" ", "\n"].include? token
+      if [TOKENS[:SPACE], TOKENS[:NEW_LINE]].include? token
         token = ""
-      elsif token.upcase == "PRINT"
+      elsif TOKENS[:NEW_LINE].eql?(char) and !expression.empty?
+        if is_exper
+          tokens.push "EXP:" + expression
+          is_exper = false
+        else
+          tokens.push "NUM:" + expression
+        end
+        expression = token = ""
+      elsif token.upcase.eql? TOKENS[:PRINT]
         tokens.push token
         token = ""
-      elsif char == "\""
-        if state.zero?
-          state = 1
+      elsif char == TOKENS[:DOUBLE_QUOTE]
+        if !state
+          state = true
           token = ""
         else
-          state = 0
-          tokens.push "STRING:" + string
+          state = false
+          tokens.push TOKENS[:STRING] + string
           string = ""
           token = ""
         end
-      elsif state == 1
+      elsif is_num(char)
+        expression += char
+      elsif is_mathematical_operator(char)
+        expression += char
+        is_exper = true
+      elsif state
         string = token
       end
     end
 
-    tokens
+    p tokens
+  end
+
+  def self.is_num(char)
+    !Regexp.new(TOKENS[:NUMBER]).match(char).nil?
+  end
+
+  def self.is_mathematical_operator(char)
+    ["+", "-", "*", "/", "%"].include? char
   end
 end
