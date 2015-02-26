@@ -23,10 +23,14 @@ class Parser
   end
 
   def self.print_expression(token)
-    p token.expression
+    p eval_expression(token.expression)
   end
 
   def self.print_number(token)
     p token.number
+  end
+
+  def self.eval_expression(expr)
+    eval expr
   end
 end
