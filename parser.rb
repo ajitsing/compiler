@@ -1,14 +1,16 @@
-class Parser
-  def self.parse(token_stream)
-    i = 0
-    while(i < token_stream.size)
-      token = token_stream[i]
-      next_token = token_stream[i+1]
+require_relative 'token'
 
-      if print?(token)
-        print_string next_token if string?(next_token)
-        print_expression next_token if expression?(next_token)
-        print_number next_token if number?(next_token)
+class Parser
+  def self.parse(tokens)
+    i = 0
+    while(i < tokens.size)
+      token = tokens[i]
+      next_token = tokens[i+1]
+
+      if token.print?
+        print_string next_token if next_token.string?
+        print_expression next_token if next_token.expression?
+        print_number next_token if next_token.number?
         i += 2
       else
         i += 1
@@ -17,30 +19,14 @@ class Parser
   end
 
   def self.print_string(token)
-    p token[7..-1]
+    p token.string
   end
 
   def self.print_expression(token)
-    p token[4..-1]
+    p token.expression
   end
 
   def self.print_number(token)
-    p token[4..-1]
-  end
-
-  def self.print?(token)
-    token.upcase == "PRINT"
-  end
-
-  def self.string?(token)
-    token.start_with?("STRING:")
-  end
-
-  def self.expression?(token)
-    token.start_with?("EXP:")
-  end
-
-  def self.number?(token)
-    token.start_with?("NUM:")
+    p token.number
   end
 end

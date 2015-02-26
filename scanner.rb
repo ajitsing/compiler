@@ -1,3 +1,5 @@
+require_relative 'token'
+
 class Scanner
   TOKENS = {
     :PRINT => "PRINT",
@@ -20,14 +22,14 @@ class Scanner
         token = ""
       elsif TOKENS[:NEW_LINE].eql?(char) and !expression.empty?
         if is_exper
-          tokens.push "EXP:" + expression
+          tokens.push Token.new("EXP:" + expression)
           is_exper = false
         else
-          tokens.push "NUM:" + expression
+          tokens.push Token.new("NUM:" + expression)
         end
         expression = token = ""
       elsif token.upcase.eql? TOKENS[:PRINT]
-        tokens.push token
+        tokens.push Token.new(token)
         token = ""
       elsif char == TOKENS[:DOUBLE_QUOTE]
         if !state
@@ -35,7 +37,7 @@ class Scanner
           token = ""
         else
           state = false
-          tokens.push TOKENS[:STRING] + string
+          tokens.push Token.new(TOKENS[:STRING] + string)
           string = ""
           token = ""
         end
