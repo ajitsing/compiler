@@ -1,5 +1,6 @@
 PRINT "HELLO WORLD"
 print 10 + 30 + 1
 print 1
-var name = "Ajit"
+var first_name = "Ajit"
+var last_name = "Singh"
 print "var captured"

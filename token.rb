@@ -31,6 +31,14 @@ class Token
     @tok[4..-1]
   end
 
+  def var_name
+    @tok[4..-1]
+  end
+
+  def val
+    @tok
+  end
+
   def inspect
     @tok
   end
