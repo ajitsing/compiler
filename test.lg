@@ -1,7 +1,5 @@
 PRINT "HELLO WORLD"
-PRINT "Ajit Singh"
-PRINT "Cool"
-PRINT "This is awesome"
-print "this is lower case print"
 print 10 + 30 + 1
 print 1
+var name = "Ajit"
+print "var captured"

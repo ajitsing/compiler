@@ -30,4 +30,8 @@ class Token
   def number
     @tok[4..-1]
   end
+
+  def inspect
+    @tok
+  end
 end
