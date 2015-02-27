@@ -36,6 +36,16 @@ class Token
   end
 
   def val
+    if expression?
+      expression
+    elsif string?
+      string
+    elsif number?
+      number
+    end
+  end
+
+  def raw
     @tok
   end
 
