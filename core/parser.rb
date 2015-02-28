@@ -2,6 +2,7 @@ require_relative 'token'
 
 class Parser
   SYMBOLS = {}
+  OUT = []
 
   def self.parse(tokens)
     i = 0
@@ -10,14 +11,17 @@ class Parser
       next_token = tokens[i+1]
 
       if token.print?
-        next_token.expression? ? print_expression(next_token) : p(next_token.val)
+        next_token.expression? ? print_expression(next_token) : OUT.push(p(next_token.val))
         i += 2
+      elsif variable?(token, next_token, tokens[i+2])
+        add_variable(token, tokens[i+2])
+        i += 3
       else
-        add_variable(token, tokens[i+2]) if variable?(token, next_token, tokens[i+2])
         i += 1
       end
     end
     p SYMBOLS
+    OUT
   end
 
   def self.add_variable(var_tok, val_tok)
@@ -31,7 +35,7 @@ class Parser
   end
 
   def self.print_expression(token)
-    p eval_expression(token.expression)
+    OUT.push p(eval_expression(token.expression))
   end
 
   def self.eval_expression(expr)

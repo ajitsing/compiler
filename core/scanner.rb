@@ -68,7 +68,7 @@ class Scanner
       end
     end
 
-    p tokens
+    tokens
   end
 
   def self.is_num(char)

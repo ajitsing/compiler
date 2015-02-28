@@ -28,7 +28,7 @@ class Token
   end
 
   def number
-    @tok[4..-1]
+    @tok[4..-1].to_i
   end
 
   def var_name

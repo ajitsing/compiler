@@ -1,4 +1,4 @@
-class FileUtils
+class FileUtil
   def self.read(filename)
     data = ""
     File.open(filename) do |file|
