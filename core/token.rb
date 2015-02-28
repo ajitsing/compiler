@@ -11,6 +11,14 @@ class Token
     @tok.start_with? "STRING:"
   end
 
+  def variable?
+    @tok.start_with? "VAR:"
+  end
+
+  def variable_name
+    @tok[4..-2]
+  end
+
   def expression?
     @tok.start_with? "EXP:"
   end

@@ -3,6 +3,9 @@ print 10 + 30 + 1
 print 1
 var first_name = "Ajit"
 var last_name = "Singh"
-var sum = 23 + 2
+var sum = (23 + 2)
 var two = 2
 print "var captured"
+print $first_name
+print $sum
+print $two

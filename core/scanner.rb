@@ -9,6 +9,7 @@ class Scanner
     :DOUBLE_QUOTE => "\"",
     :NUMBER => "[0-9]",
     :VAR => "VAR",
+    :D_VAR => "$",
     :EQ => "="
   }
 
@@ -20,9 +21,9 @@ class Scanner
     source.each_char do |char|
       token += char
 
-      if [TOKENS[:SPACE], TOKENS[:NEW_LINE]].include? token
+      if [TOKENS[:SPACE],TOKENS[:NEW_LINE]].include? token
         token = ""
-      elsif TOKENS[:NEW_LINE].eql?(char)
+      elsif TOKENS[:NEW_LINE].eql?(char) and !var_started
         if !expression.empty?
           if is_exper
             tokens.push Token.new("EXP:" + expression)
@@ -32,6 +33,9 @@ class Scanner
           end
           expression = token = ""
         end
+      elsif token.eql?(TOKENS[:D_VAR])
+        var_started = true
+        token = var = ""
       elsif token.upcase.eql? TOKENS[:PRINT]
         tokens.push Token.new(TOKENS[:PRINT])
         token = ""
@@ -49,7 +53,12 @@ class Scanner
         var_started = true
         token = ""
       elsif var_started and !char.eql?(TOKENS[:SPACE])
-        if !char.eql?(TOKENS[:EQ])
+        if char.eql?(TOKENS[:NEW_LINE])
+          tokens.push Token.new("VAR:"+token)
+          var = ""
+          var_started = false
+          token = ""
+        elsif !char.eql?(TOKENS[:EQ])
           var = token
         else
           tokens.push Token.new("VAR:"+var)

@@ -5,7 +5,7 @@ describe 'compiler' do
   it 'should print the given string' do
     source_code = <<-LG
       print "Hello World"
-      Print "Hello World!"
+      PRINT "Hello World!"
     LG
 
     FileUtil.stub(:read).with('some_file').and_return(source_code)
@@ -47,10 +47,16 @@ describe 'compiler' do
     source_code = <<-LG
       var name = "Ajit Singh"
       var age = 20
-      var total_marks = 80 + 60
+      var marks = 80 + 60 + 70
+      print $name
+      print $age
+      print $marks
     LG
-
     FileUtil.stub(:read).with('some_file').and_return(source_code)
-    Compiler.compile 'some_file'
+    output = Compiler.compile 'some_file'
+
+    output.include?("Ajit Singh").should be_truthy
+    output.include?(20).should be_truthy
+    output.include?(210).should be_truthy
   end
 end

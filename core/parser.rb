@@ -11,7 +11,13 @@ class Parser
       next_token = tokens[i+1]
 
       if token.print?
-        next_token.expression? ? print_expression(next_token) : OUT.push(p(next_token.val))
+        if next_token.expression?
+          print_expression(next_token)
+        elsif next_token.variable?
+          print_variable(next_token)
+        else
+          OUT.push(p(next_token.val))
+        end
         i += 2
       elsif variable?(token, next_token, tokens[i+2])
         add_variable(token, tokens[i+2])
@@ -20,12 +26,19 @@ class Parser
         i += 1
       end
     end
-    p SYMBOLS
     OUT
   end
 
+  def self.print_variable(token)
+    OUT.push p(SYMBOLS[token.variable_name])
+  end
+
   def self.add_variable(var_tok, val_tok)
-    SYMBOLS[var_tok.var_name] = val_tok.val
+    if val_tok.expression?
+      SYMBOLS[var_tok.var_name] = eval_expression(val_tok.val)
+    else
+      SYMBOLS[var_tok.var_name] = val_tok.val
+    end
   end
 
   def self.variable?(token1, token2, token3)

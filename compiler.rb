@@ -9,3 +9,5 @@ class Compiler
     Parser.parse tokens
   end
 end
+
+#Compiler.compile #uncomment while compiling file
