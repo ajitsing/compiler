@@ -3,6 +3,7 @@ require_relative 'state_machine'
 class KeywordMachine < StateMachine
   def initialize(keyword)
     super()
+    @keyword = keyword
     @states = keyword.chars
   end
 
@@ -15,6 +16,15 @@ class KeywordMachine < StateMachine
       @current_state = :dead
     end
     self
+  end
+
+  def val
+    @keyword
+  end
+
+  def reset_state
+    super
+    @states = @keyword.chars
   end
 
   private

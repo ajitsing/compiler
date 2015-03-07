@@ -26,6 +26,11 @@ class StringMachine < StateMachine
     @string
   end
 
+  def reset_state
+    super
+    @string = ""
+  end
+
   private
   def double_quote?(x)
     x == "\""

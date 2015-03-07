@@ -22,4 +22,8 @@ class StateMachine
   def state
     @current_state
   end
+
+  def reset_state
+    @current_state = :not_started
+  end
 end
