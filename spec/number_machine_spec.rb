@@ -1,7 +1,7 @@
 require 'spec_helper'
 require_relative '../utils/number_machine'
 
-describe :KeywordMachine do
+describe :NumberMachine do
   it 'should be in :not_started state when no input is supplied' do
     NumberMachine.new.state.should == :not_started
   end

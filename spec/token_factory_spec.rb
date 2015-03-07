@@ -14,9 +14,9 @@ describe :TokenFactory do
     factory.get_token.inspect.should == 'STRING:cool'
   end
 
-  it 'should return number when the token is a number' do
+  it 'should return expression when the token is a expression' do
     factory = TokenFactory.new
     factory.raw_data("2").raw_data("1")
-    factory.get_token.inspect.should == 'NUM:21'
+    factory.get_token.inspect.should == 'EXP:21'
   end
 end

@@ -15,22 +15,22 @@ describe 'compiler' do
     output.include?("Hello World!").should be_truthy
   end
 
-  #it 'should evaluate expression' do
-    #source_code = <<-LG
-      #print 10 + 20
-      #print 2 * 4
-      #print 2 - 4
-      #print 10 / 5
-    #LG
+  it 'should evaluate expression' do
+    source_code = <<-LG
+      print 10 + 20
+      print 2 * 4
+      print 2 - 4
+      print 10 / 5
+    LG
 
-    #FileUtil.stub(:read).with('some_file').and_return(source_code)
-    #output = Compiler.compile 'some_file'
+    FileUtil.stub(:read).with('some_file').and_return(source_code)
+    output = Compiler.compile 'some_file'
 
-    #output.include?(30).should be_truthy
-    #output.include?(8).should be_truthy
-    #output.include?(-2).should be_truthy
-    #output.include?(2).should be_truthy
-  #end
+    output.include?(30).should be_truthy
+    output.include?(8).should be_truthy
+    output.include?(-2).should be_truthy
+    output.include?(2).should be_truthy
+  end
 
   it 'should print numbers' do
     source_code = <<-LG
