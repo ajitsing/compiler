@@ -2,6 +2,7 @@ require_relative 'keyword_machine'
 require_relative 'variable_machine'
 require_relative 'string_machine'
 require_relative 'number_machine'
+require_relative 'operator_machine'
 require_relative 'expression_machine'
 
 class TokenFactory
@@ -12,8 +13,9 @@ class TokenFactory
     string_machine = StringMachine.new
     number_machine = NumberMachine.new
     expression_machine = ExpressionMachine.new
+    operator_machine = OperatorMachine.new
 
-    @machines = [print_key, var_key, string_machine, number_machine, expression_machine, variable_machine]
+    @machines = [print_key, var_key, string_machine, number_machine, expression_machine, variable_machine, operator_machine]
   end
 
   def raw_data(data)
@@ -53,6 +55,7 @@ class TokenFactory
     string_machine = machines.select {|m| m.is_a? StringMachine}.first
     expression_machine = machines.select {|m| m.is_a? ExpressionMachine}.first
     variable_machine = machines.select {|m| m.is_a? VariableMachine}.first
+    operator_machine = machines.select {|m| m.is_a? OperatorMachine}.first
 
     #priority of machines
     if !key_machine.nil?
@@ -61,6 +64,8 @@ class TokenFactory
       string_machine
     elsif !expression_machine.nil?
       expression_machine
+    elsif !operator_machine.nil?
+      operator_machine
     elsif !variable_machine.nil? and running.empty?
       variable_machine
     end

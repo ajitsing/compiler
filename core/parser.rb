@@ -26,6 +26,7 @@ class Parser
         i += 1
       end
     end
+    p SYMBOLS
     OUT
   end
 
