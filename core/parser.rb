@@ -26,12 +26,11 @@ class Parser
         i += 1
       end
     end
-    p SYMBOLS
     OUT
   end
 
   def self.print_variable(token)
-    OUT.push p(SYMBOLS[token.variable_name])
+    OUT.push p(SYMBOLS[token.var_name])
   end
 
   def self.add_variable(var_tok, val_tok)

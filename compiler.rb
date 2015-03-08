@@ -10,4 +10,4 @@ class Compiler
   end
 end
 
-Compiler.compile #uncomment while compiling file
+#Compiler.compile #uncomment while compiling file

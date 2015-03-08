@@ -1,3 +1,6 @@
-print "Hello World"
-
 var name = "Ajit"
+print name
+
+print 100
+print 100 * 100
+print "done..."

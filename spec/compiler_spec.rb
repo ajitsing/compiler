@@ -43,20 +43,20 @@ describe 'compiler' do
     output.include?(10).should be_truthy
   end
 
-  #it 'should handle variables' do
-    #source_code = <<-LG
-      #var name = "Ajit Singh"
-      #var age = 20
-      #var marks = 80 + 60 + 70
-      #print $name
-      #print $age
-      #print $marks
-    #LG
-    #FileUtil.stub(:read).with('some_file').and_return(source_code)
-    #output = Compiler.compile 'some_file'
+  it 'should handle variables' do
+    source_code = <<-LG
+      var name = "Ajit Singh"
+      var age = 20
+      var marks = 80 + 60 + 70
+      print name
+      print age
+      print marks
+    LG
+    FileUtil.stub(:read).with('some_file').and_return(source_code)
+    output = Compiler.compile 'some_file'
 
-    #output.include?("Ajit Singh").should be_truthy
-    #output.include?(20).should be_truthy
-    #output.include?(210).should be_truthy
-  #end
+    output.include?("Ajit Singh").should be_truthy
+    output.include?(20).should be_truthy
+    output.include?(210).should be_truthy
+  end
 end
