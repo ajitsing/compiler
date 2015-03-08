@@ -1,16 +1,19 @@
 require_relative 'keyword_machine'
+require_relative 'variable_machine'
 require_relative 'string_machine'
 require_relative 'number_machine'
 require_relative 'expression_machine'
 
 class TokenFactory
   def initialize
-    keyword_machine = KeywordMachine.new('print')
+    print_key = KeywordMachine.new('print')
+    var_key = KeywordMachine.new('var')
+    variable_machine = VariableMachine.new
     string_machine = StringMachine.new
     number_machine = NumberMachine.new
     expression_machine = ExpressionMachine.new
 
-    @machines = [keyword_machine, string_machine, number_machine, expression_machine]
+    @machines = [print_key, var_key, string_machine, number_machine, expression_machine, variable_machine]
   end
 
   def raw_data(data)
@@ -22,16 +25,7 @@ class TokenFactory
 
   def get_token
     machine = machine_in_final_state
-
-    if machine.is_a? KeywordMachine
-      Token.new(machine.val)
-    elsif machine.is_a? StringMachine
-      Token.new('STRING:' + machine.val)
-    elsif machine.is_a? ExpressionMachine
-      Token.new('EXP:' + machine.val)
-    elsif machine.is_a? NumberMachine
-      Token.new('NUM:' + machine.val)
-    end
+    Token.new(machine.val)
   end
 
   def machine_states
@@ -53,10 +47,22 @@ class TokenFactory
   private
   def machine_in_final_state
     machines = @machines.select { |machine| machine.in_final_state? }
-    if machines.size == 1
-      machines.first
-    else
-      machines.select {|m| m.is_a? ExpressionMachine}.first
+    running = @machines.select { |machine| machine.running? }
+
+    key_machine = machines.select {|m| m.is_a? KeywordMachine}.first
+    string_machine = machines.select {|m| m.is_a? StringMachine}.first
+    expression_machine = machines.select {|m| m.is_a? ExpressionMachine}.first
+    variable_machine = machines.select {|m| m.is_a? VariableMachine}.first
+
+    #priority of machines
+    if !key_machine.nil?
+      key_machine
+    elsif !string_machine.nil?
+      string_machine
+    elsif !expression_machine.nil?
+      expression_machine
+    elsif !variable_machine.nil? and running.empty?
+      variable_machine
     end
   end
 end

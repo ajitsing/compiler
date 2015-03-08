@@ -10,6 +10,10 @@ describe :NumberMachine do
     NumberMachine.new.input("1").state.should == :final
   end
 
+  it 'should return the number' do
+    NumberMachine.new.input("1").val.should == 'NUM:1'
+  end
+
   it 'should be in :final state when multiple numbers are supplied' do
     NumberMachine.new.input("1").input("2").input("3").state.should == :final
   end

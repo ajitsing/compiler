@@ -16,7 +16,7 @@ class NumberMachine < StateMachine
   end
 
   def val
-    @number
+    'NUM:' + @number
   end
 
   def reset_state

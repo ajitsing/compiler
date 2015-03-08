@@ -20,7 +20,7 @@ class ExpressionMachine < StateMachine
   end
 
   def val
-    @expression
+    'EXP:' + @expression
   end
 
   def has_mathematical_ops?

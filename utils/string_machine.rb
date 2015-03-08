@@ -23,7 +23,7 @@ class StringMachine < StateMachine
   end
 
   def val
-    @string
+    'STRING:' + @string
   end
 
   def reset_state
